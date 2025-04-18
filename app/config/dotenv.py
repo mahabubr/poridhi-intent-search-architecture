@@ -1,4 +1,4 @@
 import os
 
-QDRANT_HOST = os.getenv("QDRANT_HOST")
-QDRANT_PORT = os.getenv("QDRANT_PORT")
+QDRANT_HOST = os.getenv("QDRANT_HOST_OPTION")
+QDRANT_PORT = os.getenv("QDRANT_PORT_OPTION")

@@ -5,6 +5,10 @@ from app.router import intent_search
 
 load_dotenv()
 
+from .qdrant import qdrant_client
+
+qdrant_client.get_client()
+
 app = FastAPI()
 
 app.include_router(intent_search.router)
