@@ -1,5 +1,7 @@
-def intent_search(search):
+from app.manager.refine_query_manager import query_manager
 
-    print(search)
+
+def intent_search(search):
+    refine_query = query_manager(search=search)
 
     return {"message": "Let's Deep Drive"}
