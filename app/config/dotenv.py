@@ -2,3 +2,4 @@ import os
 
 QDRANT_HOST = os.getenv("QDRANT_HOST_OPTION")
 QDRANT_PORT = os.getenv("QDRANT_PORT_OPTION")
+DATABASE_URL = os.getenv("DATABASE_URL")
