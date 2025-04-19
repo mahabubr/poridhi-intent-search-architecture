@@ -6,7 +6,7 @@ from app.model_vault.refine_query_model import refine_query_model
 def query_manager(search):
     start_time = time.time()
 
-    refine_search = refine_query_model.process(search)
+    refine_search = refine_query_model(search)
 
     execution_time = time.time() - start_time
 
