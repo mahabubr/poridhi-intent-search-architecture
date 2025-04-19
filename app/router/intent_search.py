@@ -5,7 +5,7 @@ router = APIRouter(prefix="/intent-search", tags=["intent-search"])
 
 
 @router.get("")
-def intent_search(search: str = Query(...)):
-    response = intent_search_controller(search)
+async def intent_search(search: str = Query(...)):
+    response = await intent_search_controller(search)
 
     return response

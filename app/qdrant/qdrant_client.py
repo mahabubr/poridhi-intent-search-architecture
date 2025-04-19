@@ -7,6 +7,5 @@ qdrant = QdrantClient(host=QDRANT_HOST, port=int(QDRANT_PORT), timeout=10000.0)
 
 def get_client():
     print(qdrant.get_collections())
-    print(qdrant.get_collection(collection_name="products").points_count)
 
     return qdrant

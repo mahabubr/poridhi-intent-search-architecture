@@ -14,4 +14,4 @@ def query_manager(search):
         search=search, refine_search=refine_search, execution_time=execution_time
     )
 
-    return ""
+    return refine_search
