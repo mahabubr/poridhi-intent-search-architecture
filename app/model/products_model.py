@@ -1,6 +1,5 @@
-from sqlmodel import SQLModel, Field, Relationship
-from typing import Optional, List
-from sqlalchemy.orm import Mapped
+from sqlmodel import SQLModel, Field
+from typing import Optional
 
 
 class Product(SQLModel, table=True):
@@ -14,7 +13,7 @@ class Product(SQLModel, table=True):
     discounted_price: float
     image: str
     is_fk_advantage_product: bool
-    description: Optional[str]
+    description: Optional[str] = None
     product_rating: float
     overall_rating: float
     brand: str
