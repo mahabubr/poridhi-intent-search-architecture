@@ -13,7 +13,7 @@ def fine_tune_model():
 with DAG(
     dag_id="ml_finetune_dag",
     start_date=datetime(2024, 1, 1),
-    schedule_interval="@hourly",
+    schedule_interval="* * * * *",
     catchup=False,
 ) as dag:
     fine_tune = PythonOperator(
