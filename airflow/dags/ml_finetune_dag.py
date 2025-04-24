@@ -1,22 +1,28 @@
+from datetime import datetime, timedelta
 from airflow import DAG
-from airflow.operators.python import PythonOperator
-from datetime import datetime
-import time
+from airflow.providers.standard.operators.python import PythonOperator
+
+default_args = {
+    "owner": "airflow",
+    "depends_on_past": False,
+    "start_date": datetime(2023, 1, 1),
+    "retries": 1,
+    "retry_delay": timedelta(minutes=5),
+}
 
 
-def fine_tune_model():
-    print("Starting ML fine-tuning job...")
-    time.sleep(10)
-    print("Fine-tuning complete.")
+def call_fastapi_endpoint():
+    print("Call From DAG --> ENDPOINT")
 
 
 with DAG(
-    dag_id="ml_finetune_dag",
-    start_date=datetime(2024, 1, 1),
-    schedule_interval="* * * * *",
+    "fastapi_integration",
+    default_args=default_args,
+    schedule=timedelta(minutes=2),
     catchup=False,
 ) as dag:
-    fine_tune = PythonOperator(
-        task_id="fine_tune_model",
-        python_callable=fine_tune_model,
+
+    call_api_task = PythonOperator(
+        task_id="call_fastapi_endpoint",
+        python_callable=call_fastapi_endpoint,
     )

@@ -1,5 +1,6 @@
 from sqlmodel import SQLModel, Field, Relationship
 from typing import Optional, List
+from sqlalchemy.orm import Mapped
 
 
 class Product(SQLModel, table=True):
@@ -19,14 +20,3 @@ class Product(SQLModel, table=True):
     brand: str
     formatted_specifications: str
     product_category: str
-
-    specifications: List["Specification"] = Relationship(back_populates="product")
-
-
-class Specification(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
-    key: str
-    value: str
-    product_id: str = Field(foreign_key="product.id")
-
-    product: Optional[Product] = Relationship(back_populates="specifications")
