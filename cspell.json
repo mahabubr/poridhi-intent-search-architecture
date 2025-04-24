@@ -1,0 +1,17 @@
+{
+  "version": "0.2",
+  "ignorePaths": [],
+  "dictionaryDefinitions": [],
+  "dictionaries": [],
+  "words": [
+    "DDGS",
+    "dotenv",
+    "duckduckgo",
+    "ndarray",
+    "ngram",
+    "qdrant",
+    "selectinload"
+  ],
+  "ignoreWords": [],
+  "import": []
+}

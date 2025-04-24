@@ -3,6 +3,8 @@ from app.manager.search_cache_manager import get_search_cache, set_search_cache
 from app.model_vault.embedding_model import EmbeddingModel
 from app.qdrant.qdrant_service import search_qdrant
 from app.manager.fetch_product_manager import fetch_product
+from app.qdrant.qdrant_score_stats import get_score_stats
+from app.web_search.search_duckduckgo import duckduckgo_search_query
 
 model_name = "sentence-transformers/all-MiniLM-L6-v2"
 
@@ -24,6 +26,11 @@ async def intent_search(search):
     embedding = embedding_model.embed(refine_query)
 
     vector_db = search_qdrant(embedding, 10)
+
+    score_stats = get_score_stats(vector_db)
+
+    if score_stats["avg"] < 80:
+        duckduckgo_search_query(query=search)
 
     product_ids = [point.payload["uniq_id"] for point in vector_db]
 
