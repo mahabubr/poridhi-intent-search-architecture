@@ -19,5 +19,3 @@ with DAG(
     extract_data = PythonOperator(
         dag=dag, task_id="extract_data", python_callable=extract_data_callable
     )
-
-    extract_data

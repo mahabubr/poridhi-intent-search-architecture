@@ -18,7 +18,7 @@ services:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
       timeout: 5s
-      retries: 5
+      retries: 10
 
   redis:
     image: redis:6
@@ -47,13 +47,14 @@ services:
       postgres:
         condition: service_healthy
     environment:
-      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://postgres:postgres@postgres/postgres
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://postgres:postgres@postgres/postgres
     volumes:
-      - airflow_db:/opt/airflow
       - ./airflow/dags:/opt/airflow/dags
     command: >
       bash -c "
-        airflow db migrate &&
+        pip install psycopg2-binary &&
+        airflow db init &&
         airflow users create --username airflow --password airflow --firstname Air --lastname Flow --role Admin --email airflow@example.com
       "
     networks:
@@ -65,16 +66,20 @@ services:
     restart: always
     environment:
       AIRFLOW__CORE__EXECUTOR: LocalExecutor
-      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://postgres:postgres@postgres/postgres
+      AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://postgres:postgres@postgres/postgres
       AIRFLOW__WEBSERVER__RBAC: "True"
     volumes:
-      - airflow_db:/opt/airflow
       - ./airflow/dags:/opt/airflow/dags
     ports:
       - "8080:8080"
     depends_on:
+      - postgres
       - airflow-init
-    command: webserver
+    command: >
+      bash -c "
+        pip install psycopg2-binary &&
+        airflow webserver
+      "
     networks:
       - app_network
 
@@ -83,20 +88,24 @@ services:
     container_name: airflow-scheduler
     restart: always
     environment:
-      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://postgres:postgres@postgres/postgres
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://postgres:postgres@postgres/postgres
     volumes:
-      - airflow_db:/opt/airflow
       - ./airflow/dags:/opt/airflow/dags
     depends_on:
+      - postgres
       - airflow-init
-    command: scheduler
+    command: >
+      bash -c "
+        pip install psycopg2-binary &&
+        airflow scheduler
+      "
     networks:
       - app_network
 
 volumes:
   postgres_data:
   qdrant_storage:
-  airflow_db:
 
 networks:
   app_network:
