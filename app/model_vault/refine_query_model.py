@@ -3,8 +3,10 @@ import os
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
 
-model_dir = os.path.join(base_dir, "../fine_tune_vault/flan-t5-query-refiner-model")
-tokenizer_dir = os.path.join(base_dir, "../fine_tune_vault/flan-t5-query-refiner-token")
+model_dir = os.path.join(base_dir, "../fine_tune_vault/flan-t5-query-refiner-model-v1")
+tokenizer_dir = os.path.join(
+    base_dir, "../fine_tune_vault/flan-t5-query-refiner-token-v1"
+)
 
 model_dir = os.path.abspath(model_dir)
 tokenizer_dir = os.path.abspath(tokenizer_dir)

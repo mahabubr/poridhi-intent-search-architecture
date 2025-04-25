@@ -11,7 +11,10 @@ import os
 import time
 import glob
 
-BASE_VAULT_PATH = "../fine_tune_vault"
+base_dir = os.path.dirname(os.path.abspath(__file__))
+
+BASE_VAULT_PATH = os.path.join(base_dir, "../fine_tune_vault")
+
 MODEL_BASE_NAME = "flan-t5-query-refiner"
 
 
